@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # How
 
+Before choosing subagents, read `~/.agents/pstack-models.md` when it exists. Its entries use `provider/model@effort`; route through that provider and pass the model and effort separately.
+
 Explore the codebase to answer "how does X work?" questions. Produce clear architectural explanations at the level of a senior engineer onboarding onto a subsystem. Enough to build a working mental model, not annotated source code.
 
 Two modes:

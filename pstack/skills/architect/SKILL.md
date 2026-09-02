@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Architect
 
+Before choosing subagents, read `~/.agents/pstack-models.md` when it exists. Its entries use `provider/model@effort`; route through that provider and pass the model and effort separately.
+
 Design before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Synthesize across multiple model perspectives, then fill in code against the chosen sketch. If implementation proves the sketch wrong, throw it out and redesign.
 
 ## Start

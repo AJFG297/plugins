@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Reflect
 
+Before choosing subagents, read `~/.agents/pstack-models.md` when it exists. Its entries use `provider/model@effort`; route through that provider and pass the model and effort separately.
+
 Mine the current conversation for durable learnings, then route them into skill edits.
 
 ## When to invoke

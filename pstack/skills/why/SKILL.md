@@ -6,6 +6,8 @@ disable-model-invocation: true
 
 # Why
 
+Before choosing subagents, read `~/.agents/pstack-models.md` when it exists. Its entries use `provider/model@effort`; route through that provider and pass the model and effort separately.
+
 Investigate the motivation and intent behind code. Why was it built this way? What edge cases were considered? What product, business, or operational constraints shaped the design? What alternatives were rejected, and why?
 
 Companion to the `how` skill. `how` answers what the code does and how it works. `why` answers what forces led to its shape.
