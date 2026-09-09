@@ -25,7 +25,7 @@ If `~/.agents/pstack-models.md` exists, read it and treat its values as the curr
 
 Show every role with its current `provider/model@effort` value, marking any unavailable combination as needing a choice. Ask whether to accept the mapping or change specific roles. Offer confirmed combinations plus `inherit-parent` and `auto`; both aliases run the role on the parent chat model.
 
-For panel roles, the value is a comma-separated list and one subagent runs per entry, so the list length sets the count. Panel roles are `how critics`, `arena runners`, `architect runners`, and `interrogate reviewers`. `arena cross-judge pool` is also a list, but Arena selects one entry whose model family differs from the parent's when possible. `swarm workers` is the default for every worker unless a race or comparison names a different model per arm.
+For panel roles, the value is a comma-separated list and one subagent runs per entry, so the list length sets the count. Panel roles are `arena runners`, `architect runners`, and `interrogate reviewers`. `arena cross-judge pool` is also a list, but Arena selects one entry whose model family differs from the parent's when possible. `swarm workers` is the default for every worker unless a race or comparison names a different model per arm.
 
 ### 4. Validate
 
@@ -46,7 +46,6 @@ judgment and prose: claude-code/fable[1m]@max
 hardest tasks: claude-code/fable[1m]@max
 how explorer: cursor/grok-4.6-fast@xhigh
 how explainer: claude-code/fable[1m]@max
-how critics: claude-code/fable[1m]@max, codex/gpt-5.6-sol@max, cursor/grok-4.6-fast@xhigh, claude-code/default@xhigh
 why investigators: cursor/grok-4.6-fast@xhigh
 why synthesizer: claude-code/fable[1m]@max
 reflect tooling: codex/gpt-5.6-sol@max
