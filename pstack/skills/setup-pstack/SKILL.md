@@ -23,7 +23,7 @@ If `~/.agents/pstack-models.md` exists, read its budget, role values, and explic
 
 ### 3. Budget, map, and confirm
 
-Ask for a reasoning budget, showing the current budget when recorded. Offer `unlimited` to keep each role's effort, `large` for xhigh, `medium` for high, and `small` for medium.
+Ask for a reasoning budget, showing the current budget when recorded. Offer `unlimited` for max, `large` for xhigh, `medium` for high, and `small` for medium.
 
 Keep customized providers, model identities, panel lists, aliases, and fallbacks. Apply a budget by changing only the `@effort` component of real entries, panel entries included. For the same provider and model, choose a confirmed effort at or below the target on the ladder `max` > `xhigh` > `high` > `medium` > `low`. If none is available, mark the role as needing a choice. `inherit-parent` and `auto` remain unchanged. Never translate a provider or model to meet a budget.
 
@@ -37,14 +37,14 @@ Every non-alias entry must match a confirmed provider, model, and effort combina
 
 ### 5. Write the configuration
 
-Overwrite `~/.agents/pstack-models.md` so reruns stay idempotent. Keep the file host-neutral and use `provider/model@effort`. Preserve fallback comments and record the chosen budget. The role defaults now use Grok 4.7 for code and exploration, Opus 5.5 for judgment and prose, and Sol for reflect tooling. Default panels contain Opus 5.5, Sol, and Grok 4.7. Resolve these families to confirmed native provider/model/effort combinations before writing them. Use `inherit-parent` when no matching default combination is available, unless the user chooses another confirmed combination. Existing choices always take precedence.
+Overwrite `~/.agents/pstack-models.md` so reruns stay idempotent. Keep the file host-neutral and use `provider/model@effort`. Preserve fallback comments and record the chosen budget. The role defaults now use Grok 4.7 for code and exploration, Opus 5.5 for judgment and prose, and Grok for reflect tooling. Default panels contain Opus 5.5 and Grok 4.7. Resolve these families to confirmed native provider/model/effort combinations before writing them. Use `inherit-parent` when no matching default combination is available, unless the user chooses another confirmed combination. Existing choices always take precedence.
 
 The shape below lists every supported role. Replace aliases only with confirmed combinations chosen in step 3:
 
 ```text
 # pstack model configuration
 # Delete a role line to fall back to that skill's default.
-# budget: unlimited
+# budget: large
 feature, refactoring: inherit-parent
 bug-fix: inherit-parent
 perf-issue: inherit-parent
@@ -57,11 +57,11 @@ why investigators: inherit-parent
 why synthesizer: inherit-parent
 reflect tooling: inherit-parent
 reflect judgment, divergent, synthesizer: inherit-parent
-arena runners: inherit-parent, inherit-parent, inherit-parent
-arena cross-judge pool: inherit-parent, inherit-parent, inherit-parent
+arena runners: inherit-parent, inherit-parent
+arena cross-judge pool: inherit-parent, inherit-parent
 swarm workers: inherit-parent
-architect runners: inherit-parent, inherit-parent, inherit-parent
-interrogate reviewers: inherit-parent, inherit-parent, inherit-parent
+architect runners: inherit-parent, inherit-parent
+interrogate reviewers: inherit-parent, inherit-parent
 ```
 
 ### 6. Confirm
