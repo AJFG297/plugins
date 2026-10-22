@@ -37,7 +37,7 @@ Every non-alias entry must match a confirmed provider, model, and effort combina
 
 ### 5. Write the configuration
 
-Overwrite `~/.agents/pstack-models.md` so reruns stay idempotent. Keep the file host-neutral and use `provider/model@effort`. Preserve fallback comments and record the chosen budget. The role defaults now use Grok 4.7 for code and exploration, Opus 5.5 for judgment and prose, and Grok for reflect tooling. Default panels contain Opus 5.5 and Grok 4.7. Resolve these families to confirmed native provider/model/effort combinations before writing them. Use `inherit-parent` when no matching default combination is available, unless the user chooses another confirmed combination. Existing choices always take precedence.
+Overwrite `~/.agents/pstack-models.md` so reruns stay idempotent. Keep the file host-neutral and use `provider/model@effort`. Preserve fallback comments and record the chosen budget. The role defaults now use Grok 4.7 for code and exploration, Opus 5.5 (`claude-opus-5-5-xhigh` in Cursor) for judgment and prose, and Grok for reflect tooling. Default panels contain Opus 5.5 and Grok 4.7. Resolve these families to confirmed native provider/model/effort combinations before writing them. Use `inherit-parent` when no matching default combination is available, unless the user chooses another confirmed combination. Existing choices always take precedence.
 
 The shape below lists every supported role. Replace aliases only with confirmed combinations chosen in step 3:
 
@@ -71,3 +71,7 @@ Tell the user the shared configuration was written and that pstack hosts will us
 ### 7. Offer a verification skill (optional)
 
 Check whether the project has a way to drive the real app for proof (a `verify-*` skill or an existing harness). If not, offer once: "want a project-local verification skill, so agents can drive the app the way a user does and prove changes work? I can generate one with /create-verification-skill." On yes, invoke `/create-verification-skill` wherever pstack is installed. On no, move on without pushing.
+
+### 8. Offer a formal verification skill (optional)
+
+Check whether the project already has a formal verification skill (a project skill that runs a model checker, a proof, or another verifier against the code). If not, offer once: "want a formal verification skill, so agents can prove a key property of your code holds in every case in scope, not only the cases tests reach? I can generate one with /create-formal-verification-skill." On yes, invoke `/create-formal-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin). On no, move on without pushing.
