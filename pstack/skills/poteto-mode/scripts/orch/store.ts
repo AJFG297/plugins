@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import type { Dirent } from "node:fs";
 import {
   access,
+  link,
   mkdir,
   open,
   readFile,
@@ -391,8 +392,41 @@ async function acquireLock(
     await handle.close();
   };
 
-  const takeOver = async (): Promise<void> => {
-    await unlink(path);
+  // Rename is atomic, so exactly one contender moves any given lock file out of
+  // the way. A plain unlink would let a second contender, which read the same
+  // replaced holder earlier, delete the lock the first one just created.
+  const takeOver = async (replaced: string): Promise<void> => {
+    const claim = `${path}.${pid}.${randomUUID()}`;
+    try {
+      await rename(path, claim);
+    } catch (error) {
+      if (errorCode(error) !== "ENOENT") {
+        throw error;
+      }
+    }
+    let claimed: string | undefined;
+    try {
+      claimed = (await readFile(claim, "utf8")).trim() || "unknown";
+    } catch (error) {
+      if (errorCode(error) !== "ENOENT") {
+        throw error;
+      }
+    }
+    if (claimed !== undefined && claimed !== replaced) {
+      try {
+        await link(claim, path);
+      } catch (error) {
+        if (errorCode(error) !== "EEXIST") {
+          throw error;
+        }
+      } finally {
+        await unlink(claim);
+      }
+      throw new UserError(`store lock held by pid ${claimed}`);
+    }
+    if (claimed !== undefined) {
+      await unlink(claim);
+    }
     try {
       await create();
     } catch (retryError) {
@@ -419,10 +453,10 @@ async function acquireLock(
     }
     if (holderIsDead(holder)) {
       options.onStaleLock?.(holder);
-      await takeOver();
+      await takeOver(holder);
     } else if (options.force) {
       options.onLockStolen?.(holder);
-      await takeOver();
+      await takeOver(holder);
     } else {
       throw new UserError(`store lock held by pid ${holder}`);
     }

@@ -436,6 +436,39 @@ describe("Store", () => {
     expect(await readdir(directory)).not.toContain(".orch.lock");
   });
 
+  it("lets exactly one of several racing writers replace a stale lock", async () => {
+    const { directory, store } = await initializedStore();
+    await store.close();
+    const exited = Bun.spawn(["true"]);
+    await exited.exited;
+    await writeFile(join(directory, ".orch.lock"), `${exited.pid}\n`);
+
+    const writers = ["u1", "u2", "u3"].map((id) => ({
+      id,
+      store: useStore(directory),
+    }));
+    const results = await Promise.allSettled(
+      writers.map(({ id, store: writer }) =>
+        writer.units.add({ id, track: "build" })
+      )
+    );
+    const added = results.filter((result) => result.status === "fulfilled");
+    expect(added).toHaveLength(1);
+    for (const result of results) {
+      if (result.status === "rejected") {
+        expect(String(result.reason)).toContain("store lock held by pid");
+      }
+    }
+    await Promise.all(writers.map(({ store: writer }) => writer.close()));
+
+    const reader = useStore(directory);
+    expect(await reader.units.list()).toHaveLength(1);
+    await reader.close();
+    expect(
+      (await readdir(directory)).filter((name) => name.startsWith(".orch.lock"))
+    ).toEqual([]);
+  });
+
   it("blocks a writer and steals the pid lock only with force", async () => {
     const { directory, store } = await initializedStore();
     await store.close();
