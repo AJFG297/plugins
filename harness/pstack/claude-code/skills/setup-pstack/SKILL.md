@@ -31,7 +31,7 @@ Keep customized providers, model identities, panel lists, aliases, and fallbacks
 
 Show every role with its current `provider/model@effort` value, marking any unavailable combination as needing a choice. Ask whether to accept the mapping or change specific roles. Also show retired role lines proposed for removal. Offer confirmed combinations plus `inherit-parent` and `auto`; both aliases run the role on the parent chat model.
 
-For panel roles, the value is a comma-separated list and one subagent runs per entry, so the list length sets the count. Panel roles are `arena runners`, `architect runners`, and `interrogate reviewers`. `arena cross-judge pool` is also a list, but Arena selects one entry whose model family differs from the parent's when possible. `swarm workers` is the default for every worker unless a race or comparison names a different model per arm.
+For panel roles, the value is a comma-separated list and one subagent runs per entry, so the list length sets the count. Panel roles are `arena runners`, `architect runners`, and `interrogate reviewers`. `arena cross-judge pool` is also a list, but Arena runs one judge. It tries only entries from a model family other than the parent's, in list order, so order it by preference. An `inherit-parent` or `auto` entry never judges. If no eligible entry or explicit fallback can run, skip the judge and report it. `swarm workers` is the default for every worker unless a race or comparison names a different model per arm.
 
 ### 4. Validate
 
