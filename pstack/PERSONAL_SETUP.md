@@ -56,6 +56,8 @@ Run `/setup-pstack` to create `~/.agents/pstack-models.md`. Do not copy that fil
 
 ## Merge upstream changes
 
+Preserve upstream's evaluated wording wherever possible. Limit personal skill wording changes to Cursor-specific paths, tools, and provider/model routing; use the upstream workflow text and defaults as the baseline. Keep portability rules in the Provider portability paragraph in poteto-mode rather than rewriting each workflow.
+
 Merge upstream in this clone so personal changes stay visible as normal commits.
 
 ```bash

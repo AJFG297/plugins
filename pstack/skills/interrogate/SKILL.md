@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Interrogate
 
-Before choosing subagents, read `~/.agents/pstack-models.md` when it exists. Its entries use `provider/model@effort`; route through that provider and pass the model and effort separately.
+For provider and model routing, apply **Provider portability** in the **poteto-mode** skill's Subagents section before the Cursor mappings below.
 
 Adversaries try to break a change or a design. A finding survives only when a run proves it. Report the findings. Do not apply fixes.
 

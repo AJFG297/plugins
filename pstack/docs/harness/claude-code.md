@@ -32,16 +32,14 @@ pstack skills use Cursor names. In Claude Code, read this file once per session,
 | Cursor | Claude Code |
 | --- | --- |
 | `claude-<family>-<version>-<effort>[-fast]`, such as `claude-opus-5-5-xhigh` | `model: "opus"` and `effort: "xhigh"`. `model` takes only `opus`, `sonnet`, `haiku`, `fable`. Drop `-fast`. |
-| A `grok-*`, `gpt-*`, or other non-Claude slug | Omit `model` so the agent runs on the session model, and say so. |
+| A `gemini-*` or other non-Claude slug | Omit `model` so the agent runs on the session model, and say so. |
 | `auto` or `inherit-parent` | Omit `model`. |
-| The `pstack-models.mdc` rule, `~/.cursor/rules/pstack-models.mdc` | Read `~/.agents/pstack-models.md` before choosing subagents. Its `provider/model@effort` entries and explicit fallbacks override these upstream mappings. If a role is missing, resolve the skill's default to a confirmed available provider/model/effort combination, or inherit the parent and report the fallback. |
+| The `~/.agents/pstack-models.md` configuration | Read `~/.agents/pstack-models.md` before choosing subagents. Its `provider/model@effort` entries and explicit fallbacks override these upstream mappings. See setup-pstack below. |
 | A role value `<model> <effort>`, such as `opus high` | `model: "opus"` and `effort: "high"`. |
 
 ## setup-pstack
 
-This personal branch shares `~/.agents/pstack-models.md` across hosts. Read it before choosing subagents and keep entries in `provider/model@effort` form. Follow the source setup-pstack steps, including confirmed-provider detection and preservation of existing choices. The shared configuration takes precedence over the upstream model mappings above.
-
-When a configured provider differs from the current host, use an available cross-provider delegation tool. Pass provider, model, and effort separately. If the configured combination is unavailable, use its explicit fallback. With no declared fallback, inherit the parent model and report the fallback. Write setup changes only to `~/.agents/pstack-models.md`; keep machine-specific choices out of this repository.
+This personal branch shares `~/.agents/pstack-models.md` across hosts. Follow the source setup-pstack steps and the **Provider portability** instructions in poteto-mode. Write entries as `provider/model@effort`, preserving configured providers, models, panel sizes, and explicit fallbacks. These entries take precedence over the upstream model mappings above.
 
 ## Paths
 
